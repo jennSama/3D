@@ -1,0 +1,10 @@
+caso,estrategia,R1,R2,R3,R4,R5,costos,puntos,fichas_usadas,fichas_finales,puntos_finales
+C1,A · preventiva,C1R1-integral,C1R2-alto,C1R3-remineralizar,C1R4-integral,C1R5-metas,3+2+2+2+1,3+3+3+3+3,10,0,15
+C1,B · siempre la tentadora,C1R1-rapido,C1R2-moderado,C1R3-cepillado,C1R4-alta,C1R5-folleto,1+1+1+1+0,1+1+1+1+1,4,6,5
+C1,C · buen inicio y cierre débil,C1R1-integral,C1R2-alto,C1R3-remineralizar,C1R4-observar,C1R5-charla,3+2+2+0+2,3+3+3+0+0,9,1,9
+C2,A · preventiva,C2R1-integral,C2R2-moderado,C2R3-sellantes,C2R4-sellar,C2R5-metas,3+2+2+2+1,3+3+3+3+3,10,0,15
+C2,B · siempre la tentadora,C2R1-vistazo,C2R2-bajo,C2R3-cepillo,C2R4-fluor,C2R5-folleto,1+1+1+1+0,1+1+1+1+1,4,6,5
+C2,C · buen inicio y cierre débil,C2R1-integral,C2R2-moderado,C2R3-sellantes,C2R4-abrir,C2R5-prohibir,3+2+2+3+0,3+3+3+0+0,10,0,9
+C3,A · preventiva,C3R1-directa,C3R2-alto,C3R3-remin,C3R4-integral,C3R5-acuerdo,3+2+2+2+1,3+3+3+3+3,10,0,15
+C3,B · siempre la tentadora,C3R1-mama,C3R2-moderado,C3R3-enjuague,C3R4-alta,C3R5-folleto,1+1+1+1+0,1+1+1+1+1,4,6,5
+C3,C · buen inicio y cierre débil,C3R1-directa,C3R2-alto,C3R3-remin,C3R4-esperar,C3R5-sermon,3+2+2+0+2,3+3+3+0+0,9,1,9
