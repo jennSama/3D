@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Respaldos de su avance</title>
+  <meta name="robots" content="noindex">
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; background: #F4F1EA; color: #1d2330; font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
+    .barra { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+    .barra a { color: #13243B; font-weight: 600; }
+    h1 { font-size: 24px; margin: 8px 0 4px; color: #13243B; }
+    .lead { color: #5b6675; margin: 0 0 16px; }
+    .tarjeta { background: #fff; border-radius: 16px; box-shadow: 0 10px 40px rgba(19, 36, 59, .12); }
+    .idiomas button { border: 1px solid #c9ced6; background: #fff; border-radius: 999px; padding: 4px 12px; min-height: 34px; font: inherit; cursor: pointer; }
+    .idiomas button[aria-pressed="true"] { background: #13243B; color: #fff; border-color: #13243B; }
+    noscript p { background: #fff3cd; padding: 12px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="barra">
+      <a id="volver" href="../" data-es="← Volver al simulador" data-en="← Back to the simulator">← Volver al simulador</a>
+      <div class="idiomas" role="group" aria-label="Idioma / Language">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <h1 data-es="Respaldos de su avance" data-en="Backups of your progress">Respaldos de su avance</h1>
+    <p class="lead" data-es="Su avance se guarda en este navegador y, con su código, en la hoja del docente. Aquí puede descargar un respaldo a su computadora, restaurarlo y recuperar su avance en otro dispositivo."
+       data-en="Your progress is saved in this browser and, with your code, in the instructor’s sheet. Here you can download a backup to your computer, restore it and recover your progress on another device.">Su avance se guarda en este navegador y, con su código, en la hoja del docente. Aquí puede descargar un respaldo a su computadora, restaurarlo y recuperar su avance en otro dispositivo.</p>
+    <div class="tarjeta" id="panel"></div>
+    <noscript><p>Esta página necesita JavaScript. / This page needs JavaScript.</p></noscript>
+  </main>
+  <script src="progreso-config.js"></script>
+  <script src="progreso.js"></script>
+  <script src="progreso-ui.js"></script>
+  <script>
+    (function () {
+      var C = window.PROGRESO_CONFIG || {};
+      var lang = (function () { try { return localStorage.getItem('progreso:lang') || C.lang || 'es'; } catch (e) { return C.lang || 'es'; } })();
+      if (/[?&]lang=en/.test(location.search)) lang = 'en'; else if (/[?&]lang=es/.test(location.search)) lang = 'es';
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-es]').forEach(function (n) { n.textContent = n.getAttribute('data-' + lang); });
+      document.querySelectorAll('.idiomas button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
+        b.addEventListener('click', function () { try { localStorage.setItem('progreso:lang', b.getAttribute('data-lang')); } catch (e) {} location.search = '?lang=' + b.getAttribute('data-lang'); });
+      });
+      document.title = lang === 'en' ? 'Backups of your progress' : 'Respaldos de su avance';
+      var P = Progreso.crear({ app: C.app, endpoint: C.endpoint, token: C.token, version: C.version, lang: lang });
+      ProgresoUI.montar(P, '#panel', { modo: 'pagina', lang: lang, privacidad: C.privacidad || 'privacidad.html', permitirReinicio: true, pedirNombre: false });
+    })();
+  </script>
+</body>
+</html>
