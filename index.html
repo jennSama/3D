@@ -1319,10 +1319,10 @@ const GUIA = [
 <script>
 /* ===== configuración de la hoja de Google (Apps Script) ===== */
 /* Una sola hoja: los resultados viajan a la misma aplicación web del respaldo (respaldo/progreso-config.js),
-   con su token y la acción «resultado» (servidor/Resultados.gs). URL_HOJA_GOOGLE solo se usa si se quiere otra hoja aparte. */
+   con su token y la acción «resultado» (segunda parte de servidor/Codigo.gs). URL_HOJA_GOOGLE solo se usa si se quiere otra hoja aparte. */
 const URL_HOJA_GOOGLE = "";
 const CLAVE_HOJA = "odontoped-caries-2026"; // compatibilidad con el Code.gs anterior (hoja aparte)
-const VERSION_APP = "4.2 (2026-10-11)";
+const VERSION_APP = "4.3 (2026-10-11)";
 
 const AUDIO_DIR = "audio/";
 const STORE_KEY = "caries-casos-2d-v3";
@@ -2595,7 +2595,11 @@ function registro(){
   r.intento = S.modo === "guiado" ? "" : (k >= 0 ? k + 1 : prev.length + 1);
   r.modo = S.modo === "guiado" ? "guiado" : "evaluacion"; r.pistas_usadas = S.pistas.reduce((a,b) => a + b, 0); r.reintentos = S.reintentos;
   c.rondas.forEach((rd,i) => { const o = S.eleccion[i] ? opcion(S.eleccion[i]) : null;
-    r[`${rd.id}_opcion`] = o ? o.id : ""; r[`${rd.id}_costo`] = o ? o.costo : ""; r[`${rd.id}_puntos`] = o ? o.puntos : ""; });
+    r[`${rd.id}_opcion`] = o ? o.id : ""; r[`${rd.id}_costo`] = o ? o.costo : ""; r[`${rd.id}_puntos`] = o ? o.puntos : "";
+    // textos legibles para el docente (siempre en español, aunque el estudiante juegue en inglés)
+    r[`${rd.id}_tema`] = rd.tema; r[`${rd.id}_eleccion`] = o ? o.titulo : "(sin responder)"; r[`${rd.id}_correcta`] = mejorOpcion(rd).titulo; });
+  r.errores = c.rondas.map((rd,i) => { const o = S.eleccion[i] ? opcion(S.eleccion[i]) : null;
+    return !o || o.puntos < 3 ? `${rd.id} ${rd.tema}: ${o ? "eligió «" + o.titulo + "» (" + o.puntos + "/3)" : "sin responder"}; lo correcto: «${mejorOpcion(rd).titulo}»` : null; }).filter(Boolean).join(" | ") || "Ninguno";
   r.rondas_respondidas = res.ok ? res.respondidas : 0;
   r.puntaje_total = res.ok ? res.total : ""; r.puntaje_maximo = 15; r.porcentaje = res.ok ? res.porcentaje : "";
   r.fichas_usadas = FICHAS_INICIALES - S.fichas; r.fichas_restantes = S.fichas;
